@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <link href="DialogBox.css" rel="stylesheet" />
+    <script src="ProgressIndicator.js"></script>
+    <script src="DialogBox.js"></script>
+    <script src="templates/rendered/dialogbox.js"></script>
+</head>
+
+<body>
+
+    <button id="simple-dialog">Show simple dialog</button>
+    <button id="dialog-confirm">Show dialog with confirm button</button>
+    <button id="dialog-input">Show dialog with input</button>
+
+    <script>
+
+        document.querySelector('#simple-dialog').addEventListener('click', function () {
+            new DialogBox({
+                title: 'Test title',
+                text: 'This is the text for a test of the dropdown.',
+                modal: false,
+                type: 'alert'
+            }).show()
+        })
+
+        document.querySelector('#dialog-confirm').addEventListener('click', function () {
+
+            let buttons = [
+                {
+                    id: '',
+                    type: 'close',
+                    label: 'Cancel'
+                },
+                {
+                    id: '',
+                    style: 'delete',
+                    type: 'submit',
+                    label: 'Remove'
+                }
+            ]
+
+            new DialogBox({
+                text: 'A sample dialog text.',
+                type: 'alert',
+                buttons: buttons,
+                modal: false,
+                onSubmit: function () {
+                    console.log('submit button clicked')
+                },
+                onClose: function () {
+
+                }
+            }).show()
+        })
+
+        document.querySelector('#dialog-input').addEventListener('click', function () {
+            var buttons = [
+                {
+                    type: 'close',
+                    label: 'Cancel'
+                },
+                {
+                    type: 'submit',
+                    label: 'Update'
+                }
+            ]
+
+            new DialogBox({
+                title: 'Rename folder',
+                type: 'input',
+                inputValue: 'Initial value',
+                buttons: buttons,
+                modal: false,
+                onSubmit: function (e, inputValue) {
+                    console.log('changed value to: ', inputValue)
+                },
+                onClose: function () { }
+            }).show()
+        })
+
+    </script>
+</body>
+
+</html>

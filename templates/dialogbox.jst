@@ -1,0 +1,41 @@
+
+{{
+  var hasTitle = typeof it.title === 'string' && it.title !== '';
+}}
+
+<div class="dialog-container {{? !hasTitle }} no-title {{?}} {{? it.type === 'input' }} input-dialog {{?}}" tabindex="0">
+
+  <div class="text-cont">
+
+    {{? hasTitle }}
+      <h5>{{= it.title }}</h5>
+    {{?}}
+
+    <p>{{= it.text || '' }}</p>
+  </div>
+
+  {{? it.checkbox !== false }}
+    <div class="checkbox {{? it.checkbox.checked }} checked {{?}}">{{= it.checkbox.label }}</div>
+  {{?}}
+
+  {{? it.type === 'options' && it.list.length > 0 }}
+    <ul>
+      {{ var cls = ''; }}
+      {{~ it.list : el : index }}
+        {{ cls = el.selected ? 'selected' : ''; }}
+        <li class="{{= cls }}" data-id="{{= el.id }}">{{= el.label }}</li>
+      {{~}}
+    </ul>
+  {{?}}
+
+  {{? it.type === 'input' }}
+    <input type="text" placeholder="Enter a value" value="{{= it.inputValue }}" />
+  {{?}}
+
+  <div class="dialog-button-container {{? it.buttons.length === 2 }} two-buttons {{?}}">
+    {{~ it.buttons : el : index }}
+      {{ cls = (typeof el.style !== 'undefined') ? el.style : (el.type === 'submit') ? '' : 'hollow-2'; }}
+      <button class="{{= cls }} {{= el.type }} {{= el.id || '' }}">{{= el.label }}</button>
+    {{~}}
+  </div>
+</div>
